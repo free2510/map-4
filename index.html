@@ -24,9 +24,8 @@
                 zoom: 20
             });
 
-            new mapboxgl.Marker()
+            new mapboxgl.Marker({title: title})
                 .setLngLat([lng, lat])
-                .setPopup(new mapboxgl.Popup().setText(title)) // Set title as marker popup
                 .addTo(map);
         }
 
