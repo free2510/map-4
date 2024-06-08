@@ -9,6 +9,13 @@
     <style>
         body { margin: 0; padding: 0; }
         #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100%; }
+        .marker-title {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -24,9 +31,14 @@
                 zoom: 20
             });
 
-            new mapboxgl.Marker({title: title})
+            var marker = new mapboxgl.Marker()
                 .setLngLat([lng, lat])
                 .addTo(map);
+
+            var popup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML('<div class="marker-title">' + title + '</div>');
+
+            marker.setPopup(popup);
         }
 
         // Get latitude, longitude, and title from query parameters
