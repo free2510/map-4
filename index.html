@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Satellite Map API</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZnJlZWZyZWU2MCIsImEiOiJjbHdyZ2hlamwwMGczMmlzYXJiem9oaHFxIn0.bp_4Do2mZmVjZwkDxlWmfw';
+
+        function initializeMap(lat, lng, title) {
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/satellite-v9',
+                center: [lng, lat],
+                zoom: 20
+            });
+
+            new mapboxgl.Marker()
+                .setLngLat([lng, lat])
+                .setPopup(new mapboxgl.Popup().setText(title)) // Set title as marker popup
+                .addTo(map);
+        }
+
+        // Get latitude, longitude, and title from query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const lat = urlParams.get('lat');
+        const lng = urlParams.get('lng');
+        const title = urlParams.get('title');  // Get title parameter
+
+        // Set the document title if title parameter is provided
+        if (title) {
+            document.title = title;
+        }
+
+        // Initialize map with provided coordinates and title
+        if (lat && lng) {
+            initializeMap(parseFloat(lat), parseFloat(lng), title);
+        } else {
+            console.error("Latitude and longitude are required.");
+        }
+    </script>
+</body>
+</html>
